@@ -1,11 +1,11 @@
 <div align="center">
 
    <!-- main gif -->
-   <img src="https://secure.static.tumblr.com/ef2e2596c4ea072a60453d23ceab337f/coctv14/Y6Ln55n03/tumblr_static_azgsowaz948okgow4c4o8go8c.gif" alt="Main GIF">
+   <img src="https://i.pinimg.com/originals/71/92/b3/7192b36dadb8d4dd4eb71a4227cc6a95.gif" alt="Main GIF">
 
    <!-- typing SVG -->
    <a href="https://git.io/typing-svg">
-      <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=20&color=%2300CED1&center=true&vCenter=true&lines=Python+Developer" alt="Typing SVG">
+      <img src="https://readme-typing-svg.herokuapp.com?font=Roboto+Black&size=20&color=%23b19f98&center=true&vCenter=true&lines=Python+Developer" alt="Typing SVG">
    </a>
 
 </div>
