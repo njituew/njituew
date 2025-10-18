@@ -1,7 +1,9 @@
 <div align="center">
 
    <!-- main gif -->
+   <div>
    <img src="https://cdn.pfps.gg/banners/1229-code.gif" alt = "Main gif">
+   </div>
 
    <!-- stats -->
    <!-- <img src="https://github-readme-stats.vercel.app/api?username=njituew&show_icons=true&theme=tokyonight&hide_border=true" /> -->
