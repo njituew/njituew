@@ -5,7 +5,7 @@
 
    <!-- stats -->
    <!-- <img src="https://github-readme-stats.vercel.app/api?username=njituew&show_icons=true&theme=tokyonight&hide_border=true" /> -->
-   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=njituew&layout=compact&theme=tokyonight&hide_border=true" />
+   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=njituew&layout=compact&theme=dracula&hide_border=true" />
 
    <!-- contacts -->
    <p>
