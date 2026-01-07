@@ -1,25 +1,28 @@
 <div align="center">
 
-   <!-- main gif -->
-   <div>
-   <img src="https://cdn.pfps.gg/banners/1229-code.gif" alt = "Main gif">
-   </div>
+<img src="https://cdn.pfps.gg/banners/1229-code.gif" alt="Banner" width="100%"/>
 
-   <!-- stats -->
-   <!-- <img src="https://github-readme-stats.vercel.app/api?username=njituew&show_icons=true&theme=tokyonight&hide_border=true" /> -->
-   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=njituew&layout=compact&theme=dracula&hide_border=true" />
+<p></p>
 
-   <!-- contacts -->
-   <p>
-      <a href="https://t.me/m/JURny-07MGQy">
-         <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=flat-squeare&logo=telegram&logoColor=white"/>
-      </a>
-      <a href="https://www.linkedin.com/in/egor-glinnik-549a09278/">
-         <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white"/>
-      </a>
-      <a href="https://discordapp.com/users/408919975194263552">
-         <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white"/>
-      </a>
-   </p>
+<!-- Divider -->
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" alt="Divider" width="100%"/>
+
+<p></p>
+
+| **Languages & Frameworks** | **Databases & Tools** | **Systems & DevOps** |
+|----------------------------|-----------------------|----------------------|
+| Python • FastAPI           | PostgreSQL • Pandas   | Docker • Git         |
+|                            | NumPy                 | macOS • Linux        |
+|                            |                       | Bash                 |
+
+<p></p>
+
+<!-- Divider -->
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" alt="Divider" width="100%"/>
+
+<p></p>
+
+[![Telegram](https://img.shields.io/badge/-Telegram-2CA5E0?style=flat&logo=telegram)](https://t.me/m/JURny-07MGQy)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/egor-glinnik-549a09278/)
 
 </div>
