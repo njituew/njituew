@@ -1,13 +1,22 @@
 """Sanity-checks the generated SVGs: bounds, overflow, clipping.
 
-Run after build.py. Estimates text extents with the same metrics build.py uses,
-so a run that passes here should not clip on GitHub either.
+Run `python3 tools/check.py` from the repo root. Estimates text extents with
+the same metrics build.py uses, so a run that passes here should not clip on
+GitHub either.
 """
 import glob
+import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from icons import ICONS
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+ASSETS = os.path.join(ROOT, 'assets')
+BUILD = os.path.join(HERE, 'build.py')
 
 MA = 0.602
 SANS_RATIO = 0.52  # -apple-system / Segoe UI average advance ratio
@@ -65,15 +74,27 @@ def check(path):
     return W, H
 
 
-for p in sorted(glob.glob('assets/*.svg')):
-    w, h = check(p)
-    print(f'  {p:30} {w:>4.0f} x {h:<4.0f}')
+files = sorted(glob.glob(os.path.join(ASSETS, '*.svg')))
+if not files:
+    print(f'FAIL\n  - no SVGs in {ASSETS}; run tools/build.py first')
+    sys.exit(1)
 
-src = open('build.py', encoding='utf-8').read()
+for p in files:
+    w, h = check(p)
+    print(f'  {os.path.basename(p):24} {w:>4.0f} x {h:<4.0f}')
+
+src = open(BUILD, encoding='utf-8').read()
 groups = re.search(r'GROUPS = \[(.*?)\n\]', src, re.S).group(1)
 unknown = set(re.findall(r"'([a-z][a-z0-9]*)'", groups)) - set(ICONS)
 if unknown:
     problems.append(f'build.py GROUPS reference unknown icons: {sorted(unknown)}')
+
+readme = os.path.join(ROOT, 'README.md')
+referenced = set(re.findall(r'assets/([\w.-]+\.svg)', open(readme, encoding='utf-8').read()))
+for name in sorted(referenced - {os.path.basename(p) for p in files}):
+    problems.append(f'README.md references missing asset: {name}')
+for name in sorted({os.path.basename(p) for p in files} - referenced):
+    problems.append(f'asset never referenced by README.md: {name}')
 
 print()
 if problems:

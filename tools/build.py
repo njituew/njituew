@@ -1,7 +1,8 @@
 """Generates every image used by README.md.
 
 GitHub's markdown sanitizer strips style/class/id from raw HTML, so the profile
-design has to live inside images. Run `python3 build.py` and commit assets/.
+design has to live inside images. Run `python3 tools/build.py` from the repo
+root and commit assets/.
 
 Embedded SVG keeps to a single system font stack (no @font-face, no
 foreignObject, no external refs) so it renders identically through
@@ -10,10 +11,13 @@ raw.githubusercontent.com + camo, in both GitHub themes.
 
 import html
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from icons import ICONS
 
-OUT = 'assets'
+OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'assets')
 W, PAD = 920, 26
 RIGHT = W - PAD
 
@@ -26,6 +30,7 @@ TEAL, TEAL_DIM, SLATE, DIM, BRIGHT = '#2dd4bf', '#14B8A6', '#8FA9BE', '#5A7186',
 MONO = "Menlo,Consolas,'DejaVu Sans Mono',monospace"
 SANS = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"
 MA = 0.602  # Menlo advance width ratio, used to size and align text
+SANS_RATIO = 0.52  # -apple-system / Segoe UI average advance ratio
 
 
 def esc(t):
@@ -92,6 +97,46 @@ def card(title, sub, body, h):
             f'{head}<line x1="{PAD}" y1="48.5" x2="{RIGHT}" y2="48.5" stroke="{LINE}"/>{body}')
 
 
+# ── flags ─────────────────────────────────────────────────────────────────────
+FLAG_W, FLAG_H, FLAG_GAP = 20, 14, 7
+# Proportions and colours from each flag's official specification.
+BANDS = {
+    'BY': [(2, '#C8313E'), (1, '#00A85A')],
+    'RU': [(1, '#FFFFFF'), (1, '#0039A6'), (1, '#D52B1E')],
+}
+
+
+def flag(cc, x, y):
+    w, h = FLAG_W, FLAG_H
+    total = sum(n for n, _ in BANDS[cc])
+    out, dy = [], y
+    for n, col in BANDS[cc]:
+        bh = round(h * n / total)
+        out.append(f'<rect x="{x}" y="{dy}" width="{w}" height="{bh}" fill="{col}"/>')
+        dy += bh
+    # one outline on top, so the internal band seams stay invisible
+    out.append(f'<rect x="{round(x + .5, 2)}" y="{round(y + .5, 2)}" width="{w - 1}" '
+               f'height="{h - 1}" rx="1.5" fill="none" stroke="{INK}" stroke-opacity=".55"/>')
+    return ''.join(out)
+
+
+def flow(x, y, segs, *, size, fill, font=MONO, ls=0.0, sep=9):
+    """Lay segments left to right on one baseline: ('flag', CC) or ('text', str)."""
+    out = []
+    for kind, val in segs:
+        if kind == 'flag':
+            out.append(flag(val, x, round(y - size * 0.78 - FLAG_H / 2, 2)))
+            x += FLAG_W + FLAG_GAP
+        elif kind == 'dot':
+            out.append(f'<circle cx="{round(x + 2.6, 2)}" cy="{round(y - size * 0.28, 2)}" '
+                       f'r="2.6" fill="{fill}"/>')
+            x += 11
+        else:
+            out.append(txt(x, y, val, size=size, fill=fill, font=font, ls=ls))
+            x += (mono_w(val, size, ls) if font is MONO else len(val) * SANS_RATIO * size) + sep
+    return ''.join(out), x
+
+
 # ── 1. hero ───────────────────────────────────────────────────────────────────
 H = 250
 TB, SB, TABW, DOT = 40, 36, 128, 15  # title bar, status bar, tab width, dot pitch
@@ -140,7 +185,8 @@ hero += [
 ]
 write('hero.svg', svg(W, H, 'Jahor Makśimavič — Python developer',
                       'Python, backend and AI engineering. Open to internships and junior '
-                      'backend roles. HSE University, B.S. 2027, Moscow.', ''.join(hero)))
+                      'backend roles. HSE University, B.S. 2027, Minsk, Belarus.',
+                      ''.join(hero)))
 
 # ── 2. capabilities ───────────────────────────────────────────────────────────
 CAPS = [
@@ -228,7 +274,25 @@ write('stack.svg', svg(W, h, 'Stack',
                        'AI: LangChain, RAG, vector search, tool calling.',
                        card('STACK', 'WHAT I WORK WITH DAILY', ''.join(body), h)))
 
-# ── 4. contact chips (wrapped in markdown <a> so they stay clickable) ──────────
+# ── 4. elsewhere ──────────────────────────────────────────────────────────────
+# The two cities in one row, flags inline, so the pair reads as one fact
+# rather than two competing locations.
+h = 48 + 76 + 20
+inner = [
+    flow(PAD + 14, 84, [('flag', 'BY'), ('text', 'Minsk, Belarus'), ('dot', ''),
+                        ('flag', 'RU'), ('text', 'Moscow, Russia')],
+         size=15, fill=BRIGHT, font=SANS, sep=13)[0],
+    flow(PAD + 14, 118, [('dot', ''), ('text', 'HSE University · B.S. Information Science'),
+                         ('dot', ''), ('text', '2023 – 2027')],
+         size=12.5, fill=SLATE, sep=11)[0],
+]
+write('elsewhere.svg', svg(W, h, 'Elsewhere',
+                           'Based in Minsk, Belarus, also in Moscow, Russia. HSE University, '
+                           'B.S. Information Science, 2023 to 2027. Russian native, English '
+                           'intermediate.',
+                           card('ELSEWHERE', 'BASED IN', ''.join(inner), h)))
+
+# ── 5. contact chips (wrapped in markdown <a> so they stay clickable) ──────────
 CH2, ISLOT2 = 36, 16
 for label, kind, sub, color, name in [
     ('Telegram', 'telegram', '@zearbyte', TEAL, 'contact-telegram.svg'),

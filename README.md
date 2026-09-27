@@ -11,10 +11,13 @@
 </p>
 
 <p align="center">
+  <img src="https://raw.githubusercontent.com/njituew/njituew/HEAD/assets/elsewhere.svg" width="100%" alt="Elsewhere — based in Minsk, Belarus and Moscow, Russia. HSE University, B.S. Information Science, 2023 to 2027. Russian native, English intermediate."/>
+</p>
+
+<p align="center">
   <a href="https://t.me/m/JURny-07MGQy"><img src="https://raw.githubusercontent.com/njituew/njituew/HEAD/assets/contact-telegram.svg" height="36" alt="Telegram @zearbyte"/></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/egor-glinnik-549a09278/"><img src="https://raw.githubusercontent.com/njituew/njituew/HEAD/assets/contact-linkedin.svg" height="36" alt="LinkedIn egor-glinnik"/></a>
 </p>
 
 <p align="center">
-  HSE University · B.S. Information Science, 2023–2027<br/>
-  Moscow, Russia · Russian native, English intermediate
+  Russian native, English intermediate
 </p>
